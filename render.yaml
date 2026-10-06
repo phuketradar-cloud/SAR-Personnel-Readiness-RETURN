@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: sar-personnel-readiness
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    plan: starter
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: DATABASE_PATH
+        value: /var/data/sar.db
+    disk:
+      name: sar-readiness-data
+      mountPath: /var/data
+      sizeGB: 1
